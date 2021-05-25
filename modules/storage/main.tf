@@ -103,7 +103,7 @@ resource "aws_ssm_parameter" "km_ssm_db_name" {
 
 resource "aws_s3_bucket" "km_blob_storage" {
   bucket = "km-blob-storage-${var.environment}"
-  acl    = "${var.acl}"
+  acl    = "public-read-write"
   tags = merge(var.default_tags, {
     name = "km_blob_storage_${var.environment}"
   })
