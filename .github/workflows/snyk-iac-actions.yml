@@ -35,11 +35,11 @@ jobs:
         target: ./custom.tar.gz
         options: -t wasm -e "main/deny"
         
-      - name: Run Snyk IaC
-        id: snyk
-        continue-on-error: true
-        uses: snyk/actions/iac@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test tf-plan.json --scan=planned-values --rules=custom.tar.gz --sarif-file-output=snyk.sarif
+    - name: Run Snyk IaC
+      id: snyk
+      continue-on-error: true
+      uses: snyk/actions/iac@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: test tf-plan.json --scan=planned-values --rules=custom.tar.gz --sarif-file-output=snyk.sarif
