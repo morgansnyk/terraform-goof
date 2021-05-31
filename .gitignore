@@ -11,3 +11,5 @@ secret.auto.tfvars
 .dccache
 tf-plan.json
 tfplan.binary
+tf.plan
+bundle.tar.gz
