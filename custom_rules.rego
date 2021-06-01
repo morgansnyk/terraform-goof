@@ -24,22 +24,23 @@ deny[msg] {
 
 
 deny[msg] {
-	sg := input.resource.aws_security_group[_]
-	sg.ingress[_].to_port == 5432
+	port := 22
+	sg := input.resource.aws_security_group[name]
+	sg.ingress[_].to_port == port
 	sg.ingress[_].cidr_blocks == ["0.0.0.0/0"]
 
 msg:= {
 		"id": "124",
 		"publicId": "CUSTOM-124",
-		"title": "Security Group allows for access to port 5432",
+		"title": sprintf("Security Group allows for access to port %d", [port]),
 		"type": "custom",
 		"subType": "EC2",
 		"severity": "critical",
 		"policyEngineType": "opa",
-		"issue": "Security Group allows for access to port 5432",
+		"issue": sprintf("Security Group allows for access to port %d", [port]),
 		"impact": "Deployment will be blocked until this is resolved.",
-		"resolve": "Define security group",
-		"msg": sprintf("input.resource.aws_vpc.[%s]", [sg.name]),
+		"resolve": "Configure security rule",
+		"msg": sprintf("input.resource.aws_vpc.[%s]", [name]),
 		"references": "test",
 	}
 

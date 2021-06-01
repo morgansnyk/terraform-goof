@@ -13,7 +13,7 @@ resource "aws_default_security_group" "default" {
   }
 }
 
-resource "aws_security_group" "allow_ssh" {
+resource "aws_security_group" "allow_ssh_tf" {
   name        = "allow_ssh"
   description = "Allow SSH inbound from anywhere"
   vpc_id      = aws_vpc.example.id
@@ -26,7 +26,7 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
-resource "aws_security_group" "allow_ssh_with_valid_cidr" {
+resource "aws_security_group" "allow_ssh_with_valid_cidr_tf" {
   name        = "allow_ssh_with_valid_cidr"
   description = "Allow SSH inbound from specific range"
   vpc_id      = aws_vpc.example.id

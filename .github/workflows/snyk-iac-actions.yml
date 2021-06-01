@@ -18,23 +18,19 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1  
-    
-      # Scan Terraform Plan
+      # Install OPA
+    - name: Install OPA & Build ruleset
+      run: |
+        curl -L -o opa https://github.com/open-policy-agent/opa/releases/download/v0.11.0/opa_linux_amd64
+        chmod 755 ./opa
+        ./opa build .  -t wasm -e "main/deny"  
+       # Scan Terraform Plan
     - name: Build TF Plan
       run: |
         terraform init
         terraform plan -out tf.plan 
         terraform show -json tf.plan > tf-plan.json
-     
-      # Build Custom Rule
-    - name: Build Custom Rules
-      id: opa
-      uses: aserto-dev/opa-build-action@main
-      with:
-        source: .
-        target: ./custom.tar.gz
-        options: -t wasm -e "main/deny"
-        
+            
     - name: Run Snyk IaC
       id: snyk
       continue-on-error: true
@@ -42,4 +38,5 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        command: test tf-plan.json --scan=planned-values --rules=custom.tar.gz --sarif-file-output=snyk.sarif
+        command: test tf-plan.json --scan=planned-values --rules=bundle.tar.gz --sarif-file-output=snyk.sarif
+     
