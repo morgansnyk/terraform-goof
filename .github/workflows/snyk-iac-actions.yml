@@ -23,8 +23,8 @@ jobs:
       run: |
         curl -L -o opa https://github.com/open-policy-agent/opa/releases/download/v0.11.0/opa_linux_amd64
         chmod 755 ./opa
-        ./opa build -h
-        ./opa build -t wasm -e "main/deny" ./custom_rules.rego 
+        ./opa build ./custom_rules.rego
+        ls 
        # Scan Terraform Plan
     - name: Build TF Plan
       run: |
