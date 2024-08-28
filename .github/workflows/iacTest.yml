@@ -1,4 +1,4 @@
-name: Snyk IAC and Container Test 
+name: Snyk IAC Test 
 on: push
 jobs:
   snyk:
