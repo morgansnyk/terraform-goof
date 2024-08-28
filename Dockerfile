@@ -1,5 +1,5 @@
 # FROM node:6-stretch
-FROM ${{variables.IMAGE_NAME}}
+FROM morgansnyk/goof:1.12.1
 
 LABEL org.opencontainers.image.source="https://github.com/metalstormbass/goof" 
 LABEL io.snyk.containers.image.dockerfile="/Dockerfile"
