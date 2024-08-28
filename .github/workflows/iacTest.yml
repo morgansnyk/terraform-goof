@@ -1,10 +1,6 @@
 name: Snyk IAC and Container Test 
 on: push
 jobs:
-  build:
-    name: Test and build
-    environment: snyk-npm
-    runs-on: ubuntu-latest
   snyk:
     runs-on: ubuntu-latest
     steps:
