@@ -28,7 +28,7 @@ jobs:
     #Build the container    
     - name: Build Container     
       run: |
-         docker build .  -t goof
+         sudo docker build . -t goof
     
     
     #Snyk Container Test
