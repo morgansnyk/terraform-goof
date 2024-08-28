@@ -21,23 +21,17 @@ jobs:
     #run a Snyk IAC Test and create results file
     - name: Snyk IaC # Remove || true to fail if there are vulnerabilities
       run: |
-        snyk iac test --json | snyk-to-html -o IACresults.html || true 
-        
-    #send results to SnykUI     
-    - name: Snyk IAC Monitor 
-      run: |
-        snyk iac test --report 
-
+        snyk iac test --json --report  | snyk-to-html -o IACresults.html || true 
 
     #Snyk Container Test
     - name: Run a Snyk Container Test
       run: | 
-        snyk container test ${{variable.IMAGE_Name}} --json | snyk-to-html -o containerResults.html ||true
+        snyk container test morgansnyk/goof:1.12.1 --json | snyk-to-html -o containerResults.html ||true
 
     #Snyk Container Monitor
     - name: Run a Snyk Container monitor
       run: | 
-        snyk container monitor ${{variable.IMAGE_Name}}
+        snyk container monitor morgansnyk/goof:1.12.1
 
 
 
