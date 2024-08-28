@@ -23,15 +23,23 @@ jobs:
       run: |
         snyk iac test --json --report  | snyk-to-html -o IACresults.html || true 
 
+       
+        
+    #Build the container    
+    - name: Build Container     
+      run: |
+         docker build .  -t goof
+    
+    
     #Snyk Container Test
     - name: Run a Snyk Container Test
       run: | 
-        snyk container test morgansnyk/goof:1.12.1 --json | snyk-to-html -o containerResults.html ||true
+        snyk container test --file=Dockerfile goof --json | snyk-to-html -o containerResults.html ||true
 
     #Snyk Container Monitor
     - name: Run a Snyk Container monitor
       run: | 
-        snyk container monitor morgansnyk/goof:1.12.1
+        snyk container monitor goof
 
 
 
