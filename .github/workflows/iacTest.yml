@@ -1,4 +1,4 @@
-name: Snyk IAC Test 
+name: Snyk IAC and Container Test 
 on: push
 jobs:
   snyk:
@@ -21,9 +21,12 @@ jobs:
     #run a Snyk IAC Test and create results file
     - name: Snyk IaC # Remove || true to fail if there are vulnerabilities
       run: |
-        snyk iac test --json --report  | snyk-to-html -o IACresults.html || true 
+        snyk iac test --json  | snyk-to-html -o IACresults.html || true 
 
-       
+    #Snyk IAC test Results to Snyk UI 
+    - name: Snyk IaC # Remove || true to fail if there are vulnerabilities
+      run: |
+        snyk iac test --report || true
         
     #Build the container    
     - name: Build Container     
@@ -34,7 +37,7 @@ jobs:
     #Snyk Container Test
     - name: Run a Snyk Container Test
       run: | 
-        snyk container test --file=Dockerfile goof --json | snyk-to-html -o containerResults.html ||true
+        snyk container test --file=Dockerfile goof --json | snyk-to-html -o containerResults.html || true
 
     #Snyk Container Monitor
     - name: Run a Snyk Container monitor
